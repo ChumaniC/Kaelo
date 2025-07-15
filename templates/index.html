@@ -1,0 +1,17 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Register New Animal</h2>
+  <form action="/farmer/animal-registration" method="post">
+    <label for="tag_id">Tag ID</label>
+    <input type="text" id="tag_id" name="tag_id" required />
+     <label for="farm_id">Farm ID</label>
+    <input type="text" id="farm_id" name="farm_id" required />
+    <label for="breed">Breed</label>
+    <input type="text" id="breed" name="breed" required />
+      <label for="performed_by">Performed By</label>
+    <input type="text" id="performed_by" name="performed_by" required />
+    <button type="submit">Register</button>
+  </form>
+{% endblock %}
