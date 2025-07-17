@@ -191,16 +191,24 @@
       div.className = 'form-popup single-animal-form';
       div.innerHTML = `
         <h3>Animal Details</h3>
-        <label>Tag ID</label>
-        <input type="text" required placeholder="Tag/Chip ID">
 
-        <label>Breed</label>
-        <input type="text" required placeholder="Animal Breed">
+<div id="animal_onboard">
+<form class="ajax-form"  action="/admin/animal_onboarding" method="post"
+     data-success-title="Animal Onboard Saved"
+     data-success-msg="Animal onboarding recorded on‐chain and in the database." >
+        <label for="tag_id">Tag ID</label>
+        <input type="text" id="tag_id" name="tag_id" required placeholder="Tag/Chip ID">
 
-        <label>Sex</label>
+        <label for="farm_id">Farm ID</label>
+        <input type="text" id="farm_id" name="farm_id" required placeholder="Animal Breed">
+
+        <label for="breed">Breed</label>
+        <input type="text" id="breed" name="breed" required placeholder="Animal Breed">
+
+        <label for="sex">Sex</label>
         <div class="radio-group">
-          <label><input type="radio" name="sex-${id}" value="Male" required> Male</label>
-          <label><input type="radio" name="sex-${id}" value="Female"> Female</label>
+          <label><input type="radio" id="sex" name="sex-${id}" value="Male" required> Male</label>
+          <label><input type="radio" id="sex" name="sex-${id}" value="Female"> Female</label>
         </div>
 
         <label>Date of Birth</label>
@@ -211,11 +219,13 @@
           </span>
         </div>
 
-        <label>Status</label>
+        <label for="status">Status</label>
         <div class="radio-group">
-          <label><input type="radio" name="status-${id}" value="Active" required> Active (Alive)</label>
-          <label><input type="radio" name="status-${id}" value="Inactive"> Inactive (Dead)</label>
+          <label><input id="status" type="radio" name="status-${id}" value="Active" required> Active (Alive)</label>
+          <label><input id="status" type="radio" name="status-${id}" value="Inactive"> Inactive (Dead)</label>
         </div>
+</form>
+</div>
       `;
       animalForms.appendChild(div);
       document.getElementById('admin-save-bar').scrollIntoView({ behavior: "smooth", block: "center" });

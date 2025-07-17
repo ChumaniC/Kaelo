@@ -7,11 +7,10 @@ from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse
 
 # Custom Project Packages
-from backend.routers import farmer, vet, general
+from backend.routers import farmer, vet, general, admin
 from backend.database import engine
 from backend.models import Base
 from backend.ingestion import run_ingestion_loop
-from state import AppState
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -49,6 +48,7 @@ templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 app.include_router(farmer.router)
 app.include_router(vet.router)
 app.include_router(general.router)
+app.include_router(admin.router)
 
 # Homepage
 @app.get("/")
@@ -70,6 +70,10 @@ async def vet_page(request: Request):
 @app.get("/lookup-chain", response_class=HTMLResponse)
 async def lookup_chain_page(request: Request):
     return templates.TemplateResponse("lookup-chain.html", {"request": request})
+
+@app.get("/admin", response_class=HTMLResponse)
+async def admin_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})
 
 if __name__ == "__main__":
     import uvicorn, webbrowser

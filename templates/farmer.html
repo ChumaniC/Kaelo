@@ -68,7 +68,7 @@
         <label>Did it conceive?</label>
         <div style="display: flex; justify-content: center; gap:2em;">
           <label><input type="radio" name="conceived" value="yes" required> Yes</label>
-          <label><inp ut type="radio" name="conceived" value="no" required> No</label>
+          <label><input type="radio" name="conceived" value="no" required> No</label>
         </div>
         <label>Date Observed</label>
         <input type="date">
@@ -77,11 +77,11 @@
     </div>
 
    <!-- Birth Registration -->
-<div id="birth-section" style="display:none;"
+<div id="birth-section" style="display:none;">
+  <h2>Birth Registration</h2>
+  <form class="ajax-form" id="birth-form" action="/farmer/birth-registration" method="post"
      data-success-title="Birth Registration Saved"
      data-success-msg="Birth registration recorded on‐chain and in the database.">
-  <h2>Birth Registration</h2>
-  <form class="ajax-form" id="birth-form" action="/farmer/birth-registration" method="post">
     <!-- 1) Registration date -->
     <label for="registration_date">Date</label>
     <input
