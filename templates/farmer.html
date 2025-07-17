@@ -1,18 +1,193 @@
-<!-- FARMER PORTAL: farmer.html (applies black/cyan theme, sections are independent, forms hidden until selected) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>KAY-loh – Farmer Portal</title>
   <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    body {
+      background: #000;
+      color: #00ffff;
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0;
+    }
+    nav {
+      background: #000;
+      color: #00ffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.14rem;
+      margin-left: 1.5rem;
+    }
+    .container {
+      max-width: 1050px;
+      margin: auto;
+      padding: 2.2rem 1rem 3rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.7rem;
+      margin-top: 0.5rem;
+      margin-bottom: 2.5rem;
+      font-weight: bold;
+      color: #00ffff;
+    }
+    .portal-choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.6rem;
+      margin-bottom: 2.6rem;
+    }
+    .portal-choices button {
+      background: #101722;
+      color: #00ffff;
+      padding: 1.2rem 1rem;
+      font-size: 1.15rem;
+      font-weight: bold;
+      border: 2px solid #00ffff55;
+      border-radius: 12px;
+      box-shadow: 0 1px 8px #00ffff30;
+      width: 230px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(.3,.93,.4,1.02);
+      outline: none;
+      margin: 0;
+      display: block;
+    }
+    .portal-choices button:hover,
+    .portal-choices button.active {
+      background: #00ffff;
+      color: #001115;
+      transform: translateY(-6px);
+      box-shadow: 0 2px 22px #00ffffaa;
+    }
+    .form-popup {
+      background: #0e0e0e;
+      border-radius: 14px;
+      box-shadow: 0 2px 25px rgba(0, 255, 255, 0.2);
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem 2.2rem;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      margin-top: 0;
+      display: block;
+      animation: fadeInForm .6s cubic-bezier(.28,.8,.4,1.12);
+    }
+    @keyframes fadeInForm {
+      from { opacity:0; transform: translateY(24px);}
+      to { opacity:1; transform: none;}
+    }
+    .form-popup h2 {
+      text-align: center;
+      margin-bottom: 1.3rem;
+      color: #00ffff;
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.4rem;
+      color: #00ffff;
+    }
+    input, select, textarea {
+      width: 100%;
+      margin-bottom: 1.15rem;
+      padding: 0.7rem;
+      font-size: 1.05rem;
+      background: #111;
+      color: #00ffff;
+      border: 1.4px solid #00ffff77;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    input[type="radio"] {
+      width: auto;
+      accent-color: #00ffff;
+    }
+    select {
+      background: #111;
+      color: #00ffff;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .form-popup button[type="submit"], .cyan-btn {
+      background: #00ffff;
+      color: #001115;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.07rem;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s cubic-bezier(.34,.96,.52,1.07);
+      width: 100%;
+      margin-top: .5em;
+      margin-bottom: .25em;
+      box-shadow: 0 1px 6px #00ffff33;
+    }
+    .form-popup button[type="submit"]:hover, .cyan-btn:hover {
+      background: #0ef;
+      color: #000;
+      transform: scale(1.04);
+    }
+    .form-popup div[style*="display: flex"] label {
+      font-weight: normal;
+      color: #77fcfc;
+      margin-bottom: 0;
+    }
+    @media (max-width: 750px) {
+      .portal-choices {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.9rem;
+      }
+      .form-popup {
+        padding: 1.1rem 0.45rem;
+        max-width: 99vw;
+      }
+      .portal-choices button {
+        width: 95vw;
+        min-width: 0;
+        font-size: 1rem;
+      }
+    }
+    @media (max-width:500px) {
+      .form-popup {
+        padding: 0.7rem 0.15rem;
+      }
+      .container {
+        padding: 1.1rem 1vw 2rem;
+      }
+      h1 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
   <script>
-    // Functions to show/hide independent forms
     function showSection(id) {
       const sections = ['breeding', 'gestation', 'birth', 'misc'];
       sections.forEach(section => {
         document.getElementById(section+'-section').style.display = 'none';
       });
       document.getElementById(id+'-section').style.display = 'block';
+      // Set button highlight state
+      const btns = document.querySelectorAll('.portal-choices button');
+      btns.forEach((btn, idx) => {
+        btn.classList.remove('active');
+        if (sections[idx] === id) btn.classList.add('active');
+      });
     }
     function hideSections() {
       const sections = ['breeding', 'gestation', 'birth', 'misc'];
@@ -22,10 +197,8 @@
     }
     window.onload = hideSections;
   </script>
-
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/static/js/script.js"></script>
-
 </head>
 <body>
   <nav>
@@ -68,7 +241,7 @@
         <label>Did it conceive?</label>
         <div style="display: flex; justify-content: center; gap:2em;">
           <label><input type="radio" name="conceived" value="yes" required> Yes</label>
-          <label><inp ut type="radio" name="conceived" value="no" required> No</label>
+          <label><input type="radio" name="conceived" value="no" required> No</label>
         </div>
         <label>Date Observed</label>
         <input type="date">
@@ -76,104 +249,85 @@
       </form>
     </div>
 
-   <!-- Birth Registration -->
-<div id="birth-section" style="display:none;"
-     data-success-title="Birth Registration Saved"
-     data-success-msg="Birth registration recorded on‐chain and in the database.">
-  <h2>Birth Registration</h2>
-  <form class="ajax-form" id="birth-form" action="/farmer/birth-registration" method="post">
-    <!-- 1) Registration date -->
-    <label for="registration_date">Date</label>
-    <input
-      type="date"
-      id="registration_date"
-      name="registration_date"
-      placeholder="dd/mm/yyyy"
-      required
-    />
-
-    <!-- 2) Mother’s ID -->
-    <label for="mother_animal_id">Mother’s ID</label>
-    <input
-      type="number"
-      id="mother_animal_id"
-      name="mother_animal_id"
-      placeholder="e.g. 1234"
-      required
-    />
-
-    <!-- 3) Mother’s weight -->
-    <label for="mother_weight">Mother’s Weight (kg)</label>
-    <input
-      type="number"
-      step="0.1"
-      id="mother_weight"
-      name="mother_weight"
-      placeholder="e.g. 425.5"
-      required
-    />
-
-    <!-- 4) Who is submitting? (hidden) -->
-    <input type="hidden" name="performed_by" value="1" />
-
-    <!-- 5) Offspring tag -->
-    <label for="offspring_tag_id">Offspring Tag</label>
-    <input
-      type="text"
-      id="offspring_tag_id"
-      name="offspring_tag_id"
-      placeholder="e.g. CALF-001"
-      required
-    />
-
-    <!-- 5) Offspring sex -->
-    <label for="offspring_sex">Offspring Sex</label>
-    <input
-      type="text"
-      id="offspring_sex"
-      name="offspring_sex"
-      placeholder="e.g. male, female"
-      required
-    />
-
-    <!-- 6) Offspring breed -->
-    <label for="offspring_breed">Offspring Breed</label>
-    <input
-      type="text"
-      id="offspring_breed"
-      name="offspring_breed"
-      placeholder="e.g. Holstein"
-      required
-    />
-
-    <!-- 7) Offspring purpose -->
-    <label for="offspring_purpose">Offspring Purpose</label>
-    <select id="offspring_purpose" name="offspring_purpose" required>
-      <option value="" disabled selected>Select purpose…</option>
-      <option value="Dairy">Dairy</option>
-      <option value="Meat">Meat</option>
-      <option value="Wool">Wool</option>
-      <option value="Draft">Draft</option>
-      <option value="Layer">Layer</option>
-      <option value="Broiler">Broiler</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <!-- 8) Offspring weight -->
-    <label for="offspring_weight">Offspring Weight (kg)</label>
-    <input
-      type="number"
-      step="0.1"
-      id="offspring_weight"
-      name="offspring_weight"
-      placeholder="e.g. 32.7"
-      required
-    />
-
-    <button type="submit">Register Birth</button>
-  </form>
-</div>
-
+    <!-- Birth Registration -->
+    <div id="birth-section" style="display:none;"
+         data-success-title="Birth Registration Saved"
+         data-success-msg="Birth registration recorded on‐chain and in the database.">
+      <h2>Birth Registration</h2>
+      <form class="ajax-form" id="birth-form" action="/farmer/birth-registration" method="post">
+        <label for="registration_date">Date</label>
+        <input
+          type="date"
+          id="registration_date"
+          name="registration_date"
+          placeholder="dd/mm/yyyy"
+          required
+        />
+        <label for="mother_animal_id">Mother’s ID</label>
+        <input
+          type="number"
+          id="mother_animal_id"
+          name="mother_animal_id"
+          placeholder="e.g. 1234"
+          required
+        />
+        <label for="mother_weight">Mother’s Weight (kg)</label>
+        <input
+          type="number"
+          step="0.1"
+          id="mother_weight"
+          name="mother_weight"
+          placeholder="e.g. 425.5"
+          required
+        />
+        <input type="hidden" name="performed_by" value="1" />
+        <label for="offspring_tag_id">Offspring Tag</label>
+        <input
+          type="text"
+          id="offspring_tag_id"
+          name="offspring_tag_id"
+          placeholder="e.g. CALF-001"
+          required
+        />
+        <label for="offspring_sex">Offspring Sex</label>
+        <input
+          type="text"
+          id="offspring_sex"
+          name="offspring_sex"
+          placeholder="e.g. male, female"
+          required
+        />
+        <label for="offspring_breed">Offspring Breed</label>
+        <input
+          type="text"
+          id="offspring_breed"
+          name="offspring_breed"
+          placeholder="e.g. Holstein"
+          required
+        />
+        <label for="offspring_purpose">Offspring Purpose</label>
+        <select id="offspring_purpose" name="offspring_purpose" required>
+          <option value="" disabled selected>Select purpose…</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Meat">Meat</option>
+          <option value="Wool">Wool</option>
+          <option value="Draft">Draft</option>
+          <option value="Layer">Layer</option>
+          <option value="Broiler">Broiler</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="offspring_weight">Offspring Weight (kg)</label>
+        <input
+          type="number"
+          step="0.1"
+          id="offspring_weight"
+          name="offspring_weight"
+          placeholder="e.g. 32.7"
+          required
+        />
+        <button type="submit" class="cyan-btn">Register Birth</button>
+      </form>
+    </div>
 
     <!-- Miscellaneous / Weight Update -->
     <div id="misc-section" style="display:none;" class="form-popup">
@@ -192,7 +346,7 @@
         <label>Date</label>
         <input type="date">
         <label>Weight (kg) <span style="font-size:0.85em">(if applicable)</span></label>
-        <input type="number" min="0">
+        <input type="number" placeholder="Animal Weight">
         <label>Vet Sign-off (alphanumeric)</label>
         <input type="text" placeholder="Enter vet code / number">
         <button type="submit">Save Miscellaneous Event</button>
