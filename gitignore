@@ -1,0 +1,55 @@
+# .gitignore file created for free with Tower (https://www.git-tower.com/)
+# For suggestions or improvements please contact us using support@git-tower.com
+# Generated on 2025-07-17
+# Includes: windows
+
+### Universal ###
+# Common files that should be ignored in all projects
+
+# Logs
+*.log
+# Temporary files
+*.tmp
+*~
+
+*.bak
+# Environment files (containing secrets, API keys, credentials)
+.env
+*.env
+.env.*
+
+# Local configuration that shouldn't be shared
+*.local
+
+### Windows ###
+# Windows operating system specific files
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+
+*.msm
+*.msp
+*.lnk
+*.tmp
+*.bak
+
+System Volume Information/
+[Tt]emp/
+$Recycle.Bin/
+~$*
+*.log
+
+hiberfil.sys
+pagefile.sys
+*.db
+Desktop.ini
+ntuser.dat*
