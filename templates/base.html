@@ -1,44 +1,145 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>KAY-loh – Empowering Livestock Farmers</title>
-  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #00ffff;
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0;
+    }
+    nav {
+      background: #000;
+      color: #00ffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+    }
+    nav a {
+      color: #00ffff;
+      font-weight: bold;
+      text-decoration: none;
+      margin-left: 2rem;
+    }
+    .admin-login-btn {
+      background: #181818;
+      color: #00ffff;
+      border: 1px solid #00ffff;
+      padding: 0.45em 1.2em;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .admin-login-btn:hover {
+      background: #00ffff;
+      color: #111;
+    }
+    .container.landing-header {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .landing-header h1 {
+      font-size: 4rem;
+      color: #00ffff;
+      margin-bottom: 1.3rem;
+      font-weight: bold;
+    }
+    .landing-header p {
+      font-size: 1.4rem;
+      color: #00ffffcc;
+      margin-bottom: 2.5rem;
+    }
+    .portal-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .portal-button {
+      position: relative;
+      flex: 1 1 280px;
+      max-width: 340px;
+      border-radius: 14px;
+      overflow: hidden;
+      min-width: 270px;
+      margin: 1rem 0;
+      box-shadow: 0 2px 18px #00ffff33;
+      transition: transform 0.28s cubic-bezier(.25,.8,.25,1), box-shadow 0.28s;
+      display: block;
+    }
+    .portal-button img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      filter: brightness(40%);
+      transition: filter 0.28s;
+      display: block;
+    }
+    .portal-button .portal-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #00ffff;
+      font-size: 2rem;
+      font-weight: bolder;
+      text-shadow: 0 0 10px #00ffff, 2px 4px 20px #000;
+      pointer-events: none;
+      text-align: center;
+    }
+    .portal-button:hover {
+      transform: scale(1.06) translateY(-8px);
+      box-shadow: 0 8px 44px #00ffff77;
+    }
+    .portal-button:hover img {
+      filter: brightness(60%);
+    }
+
+    @media (max-width: 950px) {
+      .portal-row { flex-direction: column; align-items: center; }
+      .portal-button { max-width: 98vw; width: 100%; }
+      .portal-button img { height: 160px; }
+    }
+  </style>
 </head>
 <body>
-<nav>
+  <nav>
     <div>KAY-loh</div>
     <div class="nav-links">
       <a href="#" class="admin-login-btn">Admin Login</a>
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container landing-header">
     <h1>Welcome to KAY-loh</h1>
     <p>
       KAY-loh is a blockchain-powered platform for all livestock farmers and vets.<br />
       Securely manage breeding, health, and compliance records for any animal.
     </p>
 
-    <!-- Farmer Portal -->
-    <a href="/farmer" class="portal-button" aria-label="Farmer Portal">
-      <img src="/static/images/farmer.jpeg" alt="Breeding farm landscape" />
-      <div class="portal-text">Farmer Portal</div>
-    </a>
+    <div class="portal-row">
+      <!-- Farmer Portal -->
+      <a href="/farmer" class="portal-button" aria-label="Farmer Portal">
+        <img src="/static/images/farmer.jpeg" alt="Breeding farm landscape" />
+        <div class="portal-text">Farmer Portal</div>
+      </a>
 
-    <!-- Vet Portal -->
-    <a href="/vet" class="portal-button" aria-label="Vet Portal">
-      <img src="/static/images/vet.jpeg" alt="Veterinarian with livestock" />
-      <div class="portal-text">Vet Portal</div>
-    </a>
+      <!-- Vet Portal -->
+      <a href="/vet" class="portal-button" aria-label="Vet Portal">
+        <img src="/static/images/vet.jpeg" alt="Veterinarian with livestock" />
+        <div class="portal-text">Vet Portal</div>
+      </a>
 
-    <!-- Animal Lookup -->
-    <a href="/lookup" class="portal-button" aria-label="Animal Lookup">
-      <img src="/static/images/lookup.jpg" alt="Livestock animals" />
-      <div class="portal-text">Animal Lookup</div>
-    </a>
+      <!-- Animal Lookup -->
+      <a href="/lookup" class="portal-button" aria-label="Animal Lookup">
+        <img src="/static/images/lookup.jpg" alt="Livestock animals" />
+        <div class="portal-text">Animal Lookup</div>
+      </a>
+    </div>
   </div>
 </body>
 </html>
-
