@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KAY-loh – Admin Onboarding</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background: #000;
+      color: #00ffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    h1.text-center {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-popup {
+      background: #0e0e0e;
+      border-radius: 14px;
+      box-shadow: 0 2px 25px rgba(0, 255, 255, 0.2);
+      width: 100%;
+      max-width: 520px;
+      margin: 2rem auto;
+      padding: 2rem;
+      font-size: 1.05rem;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #00ffff;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"] {
+      background: #111;
+      color: #00ffff;
+      border: 1.5px solid #00ffff88;
+      border-radius: 6px;
+      padding: 0.7rem;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #00ffff;
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.6rem;
+      font-size: 1.05rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      transform: scale(1.04);
+    }
+
+    .date-field {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .date-field input[type="date"] {
+      padding-right: 2.8rem;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .date-field input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .calendar-icon {
+      position: absolute;
+      top: 35%;
+      right: 0.8rem;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: #00ffff;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .calendar-icon svg {
+      width: 1.25em;
+      height: 1.25em;
+      display: block;
+    }
+
+    .add-animal-plus {
+      display: inline-block;
+      color: #00ffff;
+      font-size: 2rem;
+      font-weight: 900;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 1.9em;
+      height: 1.9em;
+      text-align: center;
+      line-height: 1.8em;
+      background: #111;
+      border: 1.5px solid #00ffff99;
+      margin: 2em auto 1em auto;
+      transition: 0.18s;
+      box-shadow: 0 1px 6px #00ffff22;
+    }
+
+    .add-animal-plus:hover {
+      background: #00ffff;
+      color: #000;
+      transform: scale(1.1);
+    }
+
+    .admin-save-bar {
+      background: #101722;
+      padding: 1.2rem 2rem;
+      border-radius: 14px;
+      text-align: center;
+      margin: 2rem auto;
+      max-width: 440px;
+      box-shadow: 0 0 18px #00ffff22;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .radio-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+
+  <script>
+    function showAnimalPanel() {
+      document.getElementById('admin-login-form').style.display = 'none';
+      document.getElementById('animal-panel').style.display = 'block';
+      addAnimalForm();
+    }
+
+    function addAnimalForm() {
+      const animalForms = document.getElementById('animal-forms');
+      const id = "admin-date" + animalForms.children.length;
+      const div = document.createElement('div');
+      div.className = 'form-popup single-animal-form';
+      div.innerHTML = `
+        <h3>Animal Details</h3>
+        <label>Tag ID</label>
+        <input type="text" required placeholder="Tag/Chip ID">
+
+        <label>Breed</label>
+        <input type="text" required placeholder="Animal Breed">
+
+        <label>Sex</label>
+        <div class="radio-group">
+          <label><input type="radio" name="sex-${id}" value="Male" required> Male</label>
+          <label><input type="radio" name="sex-${id}" value="Female"> Female</label>
+        </div>
+
+        <label>Date of Birth</label>
+        <div class="date-field">
+          <input type="date" id="${id}">
+          <span class="calendar-icon" onclick="openDatePicker('${id}')">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#00ffff" viewBox="0 0 24 24"><path d="M7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zM19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H5V9h14v11zM5 7V6h14v1H5z"/></svg>
+          </span>
+        </div>
+
+        <label>Status</label>
+        <div class="radio-group">
+          <label><input type="radio" name="status-${id}" value="Active" required> Active (Alive)</label>
+          <label><input type="radio" name="status-${id}" value="Inactive"> Inactive (Dead)</label>
+        </div>
+      `;
+      animalForms.appendChild(div);
+      document.getElementById('admin-save-bar').scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('animal-panel').style.display = 'none';
+    });
+
+    function openDatePicker(id) {
+      const input = document.getElementById(id);
+      if (input) {
+        input.focus();
+        if (typeof input.showPicker === 'function') {
+          input.showPicker();
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <div>KAY-loh</div>
+    <div><a href="index.html">Home</a></div>
+  </nav>
+
+  <div class="container">
+    <h1 class="text-center">Admin Login</h1>
+
+    <!-- Login Form -->
+    <div class="form-popup" id="admin-login-form">
+      <form onsubmit="event.preventDefault(); showAnimalPanel();">
+        <label for="farmer-id">Farmer's ID</label>
+        <input type="text" id="farmer-id" required>
+
+        <label for="admin-password">Admin Password</label>
+        <input type="password" id="admin-password" required>
+
+        <button type="submit">Login as Admin</button>
+      </form>
+    </div>
+
+    <!-- Animal Onboarding Panel -->
+    <div id="animal-panel">
+      <div id="animal-forms"></div>
+      <div style="text-align:center;">
+        <span class="add-animal-plus" onclick="addAnimalForm()">&#43;</span>
+      </div>
+      <div id="admin-save-bar" class="admin-save-bar">
+        <button class="form-action-btn">Save All Animals</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

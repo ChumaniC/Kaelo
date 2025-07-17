@@ -1,0 +1,382 @@
+body {
+  background-color: #000;
+  color: #00ffff;
+  font-family: 'Open Sans', Arial, sans-serif;
+  margin: 0;
+}
+nav {
+  background: #000;
+  color: #00ffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+}
+nav a {
+  color: #00ffff;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 2rem;
+}
+.admin-login-btn {
+  background: #181818;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 0.45em 1.2em;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.admin-login-btn:hover {
+  background: #00ffff;
+  color: #111;
+}
+.container.landing-header {
+  text-align: center;
+  margin-top: 3rem;
+}
+.landing-header h1 {
+  font-size: 4rem;
+  color: #00ffff;
+  margin-bottom: 1.3rem;
+  font-weight: bold;
+}
+.landing-header p {
+  font-size: 1.4rem;
+  color: #00ffffcc;
+  margin-bottom: 2.5rem;
+}
+.portal-row {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.portal-button {
+  position: relative;
+  flex: 1 1 280px;
+  max-width: 340px;
+  border-radius: 14px;
+  overflow: hidden;
+  min-width: 270px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 18px #00ffff33;
+  transition: transform 0.28s cubic-bezier(.25,.8,.25,1), box-shadow 0.28s;
+  display: block;
+}
+.portal-button img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  filter: brightness(40%);
+  transition: filter 0.28s;
+  display: block;
+}
+.portal-button .portal-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #00ffff;
+  font-size: 2rem;
+  font-weight: bolder;
+  text-shadow: 0 0 10px #00ffff, 2px 4px 20px #000;
+  pointer-events: none;
+  text-align: center;
+}
+.portal-button:hover {
+  transform: scale(1.06) translateY(-8px);
+  box-shadow: 0 8px 44px #00ffff77;
+}
+.portal-button:hover img {
+  filter: brightness(60%);
+}
+.form-popup {
+  background: #0e0e0e;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  box-shadow: 0 0 15px #00ffff15;
+  text-align: left;
+}
+label {
+  font-weight: bold;
+  color: #00ffff;
+  margin-top: 0.9rem;
+  display: block;
+}
+input, select, textarea {
+  background: #111;
+  color: #00ffff;
+  border: 1px solid #00ffff88;
+  padding: 0.7rem;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  box-sizing: border-box;
+}
+button {
+  background: #202937;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  font-weight: bold;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  transition: background 0.21s, color 0.21s, transform 0.21s;
+}
+button:hover {
+  background: #00ffff;
+  color: #101722;
+  transform: scale(1.04);
+}
+.register-link-spacer {
+  margin-top: 1.5em;
+}
+.text-center {
+  text-align: center;
+}
+.link {
+  color: #00ffff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.portal-choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem;
+  margin: 2.4rem 0;
+}
+.date-field {
+  position: relative;
+}
+.date-field input[type="date"] {
+  padding-right: 2.5rem;
+}
+.calendar-icon {
+  position: absolute;
+  right: 1.1rem;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.calendar-icon svg {
+  width: 21px;
+  height: 21px;
+  fill: #00ffff;
+}
+.lookup-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2.5rem 0;
+  flex-wrap: wrap;
+}
+.lookup-card {
+  background: #0e0e0e;
+  border-radius: 15px;
+  padding: 2rem 1.2rem 2rem;
+  box-shadow: 0 0 15px #00ffff44;
+  max-width: 340px;
+  min-width: 260px;
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lookup-card button {
+  background-color: #222;
+  color: #00ffff;
+  border: 1.5px solid #00ffff99;
+  padding: 0.85em 2em;
+  border-radius: 12px;
+  font-weight: 900;
+  margin-bottom: 1.3rem;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 6px #00ffff22;
+  width: 100%;
+  transition: background 0.17s, color 0.17s, transform 0.17s;
+}
+.lookup-card button:hover {
+  background: #00ffff;
+  color: #000;
+  transform: scale(1.04);
+}
+.lookup-detail {
+  width: 100%;
+  margin-top: 0.5em;
+}
+.add-animal-plus {
+  display: inline-block;
+  color: #00ffff;
+  font-size: 2.1rem;
+  font-weight: 900;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 1.9em;
+  height: 1.9em;
+  text-align: center;
+  line-height: 1.8em;
+  background: #111;
+  border: 1.5px solid #00ffff99;
+  margin: 1.5em 0 0.7em 0;
+  transition: 0.18s;
+  box-shadow: 0 1px 6px #00ffff22;
+}
+.add-animal-plus:hover {
+  background: #00ffff;
+  color: #000; 
+  transform: scale(1.11);
+}
+.admin-save-bar {
+  background:#101722;
+  padding:1.2rem 2rem;
+  border-radius:14px;
+  text-align:center;
+  margin:2rem auto;
+  max-width:440px;
+  box-shadow: 0 0 18px #00ffff11;
+}
+@media (max-width: 950px) {
+  .portal-row,
+  .lookup-row { flex-direction: column; align-items: center; }
+  .portal-button, .lookup-card { max-width: 98vw; width: 100%; }
+  .portal-button img { height: 160px; }
+}
+
+.form-popup.expanded-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 350px;
+  max-width: 800px;
+  min-height: 460px;
+  margin: 2.5rem auto;
+  box-shadow: 0 0 32px #00ffff44;
+  padding: 2.7rem 2.2rem;
+  font-size: 1.13rem;
+}
+
+@media (max-width:900px) {
+  .form-popup.expanded-form { max-width: 99vw; }
+}
+@media (max-width:600px) {
+  .form-popup.expanded-form { padding: 1.2rem 0.3rem;}
+  .portal-choices { flex-direction: column; gap:0.75em;}
+}
+.date-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.date-field label {
+  margin-bottom: .35em;
+  font-weight: bold;
+  display: block;
+}
+.date-field input[type="date"] {
+  padding-right: 2.7rem;
+}
+.calendar-icon {
+  position: absolute;
+  right: 1.1rem;
+  top: 51%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+.calendar-icon svg {
+  width: 1.45em;
+  height: 1.45em;
+  pointer-events: none;
+}
+
+/* Hide browser default date icon */
+.date-field input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  pointer-events: none;
+}
+.date-field input[type="date"] {
+  background: #111;
+  color: #00ffff;
+  border: 1.5px solid #00ffff88;
+  border-radius: 8px;
+  padding: 0.75rem 2.6rem 0.75rem 0.9rem;
+  font-size: 1.1rem;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.date-field {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+.calendar-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-48%);
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+.calendar-icon svg {
+  width: 1.35em;
+  height: 1.35em;
+  fill: #00ffff;
+  pointer-events: none;
+}
+
+/* Portal Card Styles */
+.portal-cards-row {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+.portal-card {
+  background: #101722;
+  color: #00ffff;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 2px solid #00ffff55;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px #00ffff30;
+  min-width: 200px;
+  max-width: 260px;
+  flex: 1 1 220px;
+  cursor: pointer;
+  transition: 0.2s all ease;
+}
+.portal-card:hover, .portal-card.active-card {
+  background: #00ffff;
+  color: #000a14;
+  transform: scale(1.04);
+  box-shadow: 0 3px 36px #00ffff44;
+}
+.calendar-icon {
+  position: absolute;
+  right: 1.1rem;
+  /* Change this: */
+  top: 40%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

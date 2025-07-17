@@ -1,0 +1,203 @@
+<!-- FARMER PORTAL: farmer.html (applies black/cyan theme, sections are independent, forms hidden until selected) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KAY-loh – Farmer Portal</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script>
+    // Functions to show/hide independent forms
+    function showSection(id) {
+      const sections = ['breeding', 'gestation', 'birth', 'misc'];
+      sections.forEach(section => {
+        document.getElementById(section+'-section').style.display = 'none';
+      });
+      document.getElementById(id+'-section').style.display = 'block';
+    }
+    function hideSections() {
+      const sections = ['breeding', 'gestation', 'birth', 'misc'];
+      sections.forEach(section => {
+        document.getElementById(section+'-section').style.display = 'none';
+      });
+    }
+    window.onload = hideSections;
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/static/js/script.js"></script>
+
+</head>
+<body>
+  <nav>
+    <div>KAY-loh</div>
+    <div>
+      <a href="/templates/base.html">Home</a>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Farmer Portal</h1>
+    <div class="portal-choices">
+      <button onclick="showSection('breeding')">Breeding Event Input</button>
+      <button onclick="showSection('gestation')">Gestation Tracking</button>
+      <button onclick="showSection('birth')">Birth Registration</button>
+      <button onclick="showSection('misc')">Miscellaneous / Weight Update</button>
+    </div>
+    
+    <!-- Breeding Event Input -->
+    <div id="breeding-section" style="display:none;" class="form-popup">
+      <h2>Breeding Event Input</h2>
+      <form action="/farmer/breeding" method="post">
+        <label>Animal IDs (comma separated)</label>
+        <input type="text" placeholder="e.g. 1234, 5678">
+        <label>Event Start Date</label>
+        <input type="date">
+        <label>Event End Date</label>
+        <input type="date">
+        <label>Breeding Date</label>
+        <input type="date">
+        <button type="submit">Submit Breeding Event</button>
+      </form>
+    </div>
+
+    <!-- Gestation Tracking -->
+    <div id="gestation-section" style="display:none;" class="form-popup">
+      <h2>Gestation Tracking</h2>
+      <form>
+        <label>Animal ID</label>
+        <input type="text" placeholder="Animal ID">
+        <label>Did it conceive?</label>
+        <div style="display: flex; justify-content: center; gap:2em;">
+          <label><input type="radio" name="conceived" value="yes" required> Yes</label>
+          <label><inp ut type="radio" name="conceived" value="no" required> No</label>
+        </div>
+        <label>Date Observed</label>
+        <input type="date">
+        <button type="submit">Save Gestation Update</button>
+      </form>
+    </div>
+
+   <!-- Birth Registration -->
+<div id="birth-section" style="display:none;"
+     data-success-title="Birth Registration Saved"
+     data-success-msg="Birth registration recorded on‐chain and in the database.">
+  <h2>Birth Registration</h2>
+  <form class="ajax-form" id="birth-form" action="/farmer/birth-registration" method="post">
+    <!-- 1) Registration date -->
+    <label for="registration_date">Date</label>
+    <input
+      type="date"
+      id="registration_date"
+      name="registration_date"
+      placeholder="dd/mm/yyyy"
+      required
+    />
+
+    <!-- 2) Mother’s ID -->
+    <label for="mother_animal_id">Mother’s ID</label>
+    <input
+      type="number"
+      id="mother_animal_id"
+      name="mother_animal_id"
+      placeholder="e.g. 1234"
+      required
+    />
+
+    <!-- 3) Mother’s weight -->
+    <label for="mother_weight">Mother’s Weight (kg)</label>
+    <input
+      type="number"
+      step="0.1"
+      id="mother_weight"
+      name="mother_weight"
+      placeholder="e.g. 425.5"
+      required
+    />
+
+    <!-- 4) Who is submitting? (hidden) -->
+    <input type="hidden" name="performed_by" value="1" />
+
+    <!-- 5) Offspring tag -->
+    <label for="offspring_tag_id">Offspring Tag</label>
+    <input
+      type="text"
+      id="offspring_tag_id"
+      name="offspring_tag_id"
+      placeholder="e.g. CALF-001"
+      required
+    />
+
+    <!-- 5) Offspring sex -->
+    <label for="offspring_sex">Offspring Sex</label>
+    <input
+      type="text"
+      id="offspring_sex"
+      name="offspring_sex"
+      placeholder="e.g. male, female"
+      required
+    />
+
+    <!-- 6) Offspring breed -->
+    <label for="offspring_breed">Offspring Breed</label>
+    <input
+      type="text"
+      id="offspring_breed"
+      name="offspring_breed"
+      placeholder="e.g. Holstein"
+      required
+    />
+
+    <!-- 7) Offspring purpose -->
+    <label for="offspring_purpose">Offspring Purpose</label>
+    <select id="offspring_purpose" name="offspring_purpose" required>
+      <option value="" disabled selected>Select purpose…</option>
+      <option value="Dairy">Dairy</option>
+      <option value="Meat">Meat</option>
+      <option value="Wool">Wool</option>
+      <option value="Draft">Draft</option>
+      <option value="Layer">Layer</option>
+      <option value="Broiler">Broiler</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <!-- 8) Offspring weight -->
+    <label for="offspring_weight">Offspring Weight (kg)</label>
+    <input
+      type="number"
+      step="0.1"
+      id="offspring_weight"
+      name="offspring_weight"
+      placeholder="e.g. 32.7"
+      required
+    />
+
+    <button type="submit">Register Birth</button>
+  </form>
+</div>
+
+
+    <!-- Miscellaneous / Weight Update -->
+    <div id="misc-section" style="display:none;" class="form-popup">
+      <h2>Miscellaneous / Weight Update</h2>
+      <form>
+        <label>Choose Update Type:</label>
+        <select>
+          <option>Weigh Animal</option>
+          <option>Deworming</option>
+          <option>Tag Replacement</option>
+          <option>Medication</option>
+          <option>Health Check</option>
+        </select>
+        <label>Animal ID</label>
+        <input type="text" placeholder="Animal ID">
+        <label>Date</label>
+        <input type="date">
+        <label>Weight (kg) <span style="font-size:0.85em">(if applicable)</span></label>
+        <input type="number" min="0">
+        <label>Vet Sign-off (alphanumeric)</label>
+        <input type="text" placeholder="Enter vet code / number">
+        <button type="submit">Save Miscellaneous Event</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

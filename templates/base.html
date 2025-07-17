@@ -3,15 +3,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kaelo</title>
+  <title>KAY-loh – Empowering Livestock Farmers</title>
   <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
-  <header>
-    <h1>Kaelo Cattle Tracker</h1>
-  </header>
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+<nav>
+    <div>KAY-loh</div>
+    <div class="nav-links">
+      <a href="#" class="admin-login-btn">Admin Login</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome to KAY-loh</h1>
+    <p>
+      KAY-loh is a blockchain-powered platform for all livestock farmers and vets.<br />
+      Securely manage breeding, health, and compliance records for any animal.
+    </p>
+
+    <!-- Farmer Portal -->
+    <a href="/farmer" class="portal-button" aria-label="Farmer Portal">
+      <img src="/static/images/farmer.jpeg" alt="Breeding farm landscape" />
+      <div class="portal-text">Farmer Portal</div>
+    </a>
+
+    <!-- Vet Portal -->
+    <a href="/vet" class="portal-button" aria-label="Vet Portal">
+      <img src="/static/images/vet.jpeg" alt="Veterinarian with livestock" />
+      <div class="portal-text">Vet Portal</div>
+    </a>
+
+    <!-- Animal Lookup -->
+    <a href="/lookup" class="portal-button" aria-label="Animal Lookup">
+      <img src="/static/images/lookup.jpg" alt="Livestock animals" />
+      <div class="portal-text">Animal Lookup</div>
+    </a>
+  </div>
 </body>
 </html>
+

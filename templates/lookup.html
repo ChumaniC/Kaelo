@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KAY-loh – Animal Lookup</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script>
+    function showLookupDetail(id) {
+      document.querySelectorAll('.lookup-detail').forEach(div => div.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+ function redirectToChainById() {
+   const id = document.getElementById('search-animal-id').value.trim();
+   if (!id) return;
+   // 👉 point at the route you registered, without “.html”
+   window.location.href = `/lookup-chain?animal_id=${encodeURIComponent(id)}`;
+}
+
+    function redirectToChainByQR() {
+      window.location.href = "/lookup-chain.html?animal_id=5678";
+    }
+
+    function showFilterResults(event) {
+      event.preventDefault();
+      const type = document.getElementById('type').value;
+      const results = document.getElementById('filter-results');
+
+      // Clear previous
+      results.innerHTML = '';
+
+      if (type === 'Cattle') {
+        results.innerHTML = `
+          <h4 style="margin-top: 1.5rem;">Matching Cattle:</h4>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+            <thead>
+              <tr style="background: #00ffff22;">
+                <th style="padding: 0.5rem; text-align: left;">ID</th>
+                <th style="padding: 0.5rem; text-align: left;">Breed</th>
+                <th style="padding: 0.5rem; text-align: left;">Age</th>
+                <th style="padding: 0.5rem; text-align: left;">Location</th>
+                <th style="padding: 0.5rem; text-align: left;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 0.5rem;">1234</td>
+                <td style="padding: 0.5rem;">Holstein</td>
+                <td style="padding: 0.5rem;">4 yrs</td>
+                <td style="padding: 0.5rem;">Eastern Cape</td>
+                <td style="padding: 0.5rem;">Active</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.5rem;">1251</td>
+                <td style="padding: 0.5rem;">Angus</td>
+                <td style="padding: 0.5rem;">6 yrs</td>
+                <td style="padding: 0.5rem;">Western Cape</td>
+                <td style="padding: 0.5rem;">Healthy</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.5rem;">1327</td>
+                <td style="padding: 0.5rem;">Brahman</td>
+                <td style="padding: 0.5rem;">5 yrs</td>
+                <td style="padding: 0.5rem;">UCT</td>
+                <td style="padding: 0.5rem;">Active</td>
+              </tr>
+            </tbody>
+          </table>
+        `;
+      } else {
+        results.innerHTML = `
+          <p style="margin-top: 1rem; font-style: italic; color: #00ffffaa;">No data available for selected type.</p>
+        `;
+      }
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <div>KAY-loh</div>
+    <div><a href="../../../Downloads/index.html">Home</a></div>
+  </nav>
+
+  <div class="container">
+    <h1 class="text-center">Animal Lookup</h1>
+
+    <div class="lookup-row">
+      <!-- Filter Section -->
+      <div class="lookup-card">
+        <button onclick="showLookupDetail('filter-detail')">Find by Filters</button>
+        <div id="filter-detail" class="lookup-detail" style="display:none;">
+          <h3>Find Animals by Filters</h3>
+          <form onsubmit="showFilterResults(event)">
+            <label for="type">Type</label>
+            <select id="type">
+              <option value="">Any</option>
+              <option value="Cattle">Cattle</option>
+              <option value="Sheep">Sheep</option>
+              <option value="Goat">Goat</option>
+            </select>
+            <label for="breed">Breed</label>
+            <input type="text" id="breed" placeholder="Type breed" />
+            <label for="age">Age Group</label>
+            <select id="age">
+              <option value="">Any</option>
+              <option>Calf/Chick/Lamb/Kid (0-1 year)</option>
+              <option>Young (1-3 years)</option>
+              <option>Adult (3-7 years)</option>
+              <option>Senior (7+ years)</option>
+            </select>
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="Farm, region" />
+            <button type="submit">Apply Filters</button>
+          </form>
+
+          <div id="filter-results"></div>
+        </div>
+      </div>
+
+      <!-- Lookup by ID -->
+      <div class="lookup-card">
+        <button onclick="showLookupDetail('id-detail')">Lookup by Animal ID</button>
+        <div id="id-detail" class="lookup-detail" style="display:none;">
+          <h3>Lookup by Animal ID</h3>
+          <form onsubmit="event.preventDefault(); redirectToChainById();">
+            <label for="search-animal-id">Enter Animal ID</label>
+            <input type="text" id="search-animal-id" placeholder="Animal ID" required />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- QR Scan -->
+      <div class="lookup-card">
+        <button onclick="showLookupDetail('qr-detail')">Scan Animal Tag (QR)</button>
+        <div id="qr-detail" class="lookup-detail" style="display:none;">
+          <h3>Scan Animal Tag (QR)</h3>
+          <form onsubmit="event.preventDefault(); redirectToChainByQR();">
+            <label>Upload Animal Tag QR Image</label>
+            <input type="file" accept="image/*" onchange="redirectToChainByQR();" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KAY-loh – Farmer Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+  <script>
+    function toggleForm(type) {
+      document.getElementById('login-form').style.display = (type === 'login') ? 'block' : 'none';
+      document.getElementById('register-form').style.display = (type === 'register') ? 'block' : 'none';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      toggleForm('login');
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <div>KAY-loh</div>
+    <div><a href="index.html">Home</a></div>
+  </nav>
+  <div class="container">
+    <h1 class="text-center">Farmer Access</h1>
+    <div class="form-popup" id="login-form" style="display:none;">
+      <form onsubmit="event.preventDefault(); window.location.href='farmer.html';">
+        <label>Email</label>
+        <input type="email" required>
+        <label>Password</label>
+        <input type="password" required>
+        <button type="submit">Login</button>
+        <div class="register-link-spacer text-center">
+          <span class="link" onclick="toggleForm('register')">New? Register</span>
+        </div>
+      </form>
+    </div>
+    <div class="form-popup" id="register-form" style="display:none;">
+      <form onsubmit="event.preventDefault(); window.location.href='farmer.html';">
+        <label>Email</label>
+        <input type="email" required>
+        <label>Password</label>
+        <input type="password" required>
+        <label>Name</label>
+        <input type="text" required>
+        <label>Farm Name</label>
+        <input type="text" required>
+        <button type="submit">Register</button>
+        <div class="register-link-spacer text-center">
+          <span class="link" onclick="toggleForm('login')">Already have an account? Login</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

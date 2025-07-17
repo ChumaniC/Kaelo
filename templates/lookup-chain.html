@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KAY-loh – Animal History</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #000;
+      color: #00ffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+    h1.text-center {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 1.4rem;
+      color: #00ffff;
+    }
+    .lookup-chain-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: 2rem;
+    }
+    .lookup-chain-block {
+      background: #101722;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px #00ffff25;
+      color: #00ffff;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      margin-bottom: 1rem;
+      font-size: 1.05rem;
+    }
+    .lookup-chain-block h2 {
+      margin: 0 0 0.6rem;
+      font-size: 1.3rem;
+      color: #00ffff;
+    }
+    .lookup-chain-arrow {
+      font-size: 6rem;
+      color: #00ffffbb;
+      margin: -0.5rem 0;
+    }
+    .animal-id-display {
+      text-align: center;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+.timeline-note {
+  text-align: center;
+  color: #00ffffaa;
+  font-style: italic;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.95rem;
+}
+  </style>
+
+   <style>
+    .lookup-chain-block .tx-id {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+      color: #00ffbb;
+    }
+  </style>
+
+  <script>
+    window.onload = () => {
+      const params = new URLSearchParams(window.location.search);
+      const animalId = params.get('animal_id');
+      document.getElementById('animal-id-display').textContent = animalId ? `Animal ID: ${animalId}` : '';
+    };
+  </script>
+</head>
+<body>
+  <nav>
+    <div>KAY-loh</div>
+    <div><a href="/lookup">← Back to Lookup</a></div>
+  </nav>
+
+  <div class="container">
+    <h1 class="text-center">Animal History Timeline</h1>
+    <div
+      id="animal-id-display"
+      class="animal-id-display"
+      style="
+        font-size: 1.6rem;
+        color: #00ffff;
+        font-weight: 600;
+        margin-top: 1.5rem;
+      "
+    ></div>
+ <p class="timeline-note">
+    Events are listed from most recent on‑chain (top) down to the earliest.
+  </p>
+    <div class="lookup-chain-container" id="timeline"></div>
+  </div>
+
+
+
+  <script>
+    // define the order you want keys to appear
+    const PREFERRED_ORDER = [
+      "motherAnimalId",
+      "offspringAnimalId",
+      "offspringAnimalSex",
+      "breed",
+      "weight",
+      "vaccineType",
+      "dose",
+      "nextVisitDate",
+      "registrationDate",
+      "cost",
+      "notes",
+      "timestamp"
+    ];
+
+    // human‑friendly key
+    function formatKey(k) {
+      return k
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (c) => c.toUpperCase());
+    }
+
+    // date formatter
+    function tryFormatDate(k, v) {
+      try {
+        if (k.toLowerCase().includes("date")) {
+          return new Date(v).toLocaleDateString();
+        }
+        if (k === "timestamp") {
+          return new Date(v).toLocaleString();
+        }
+      } catch (e) { }
+      return v;
+    }
+
+    function renderBlock(a) {
+      // flatten out p.details then other top‑level keys except "details"
+      const flat = {};
+      if (a.payload?.details && typeof a.payload.details === "object") {
+        Object.assign(flat, a.payload.details);
+      }
+      for (const [k, v] of Object.entries(a.payload || {})) {
+        if (k === "details") continue;
+        flat[k] = v;
+      }
+
+      // sort keys
+      const keys = Object.keys(flat).sort((a, b) => {
+        const ia = PREFERRED_ORDER.indexOf(a);
+        const ib = PREFERRED_ORDER.indexOf(b);
+        if (ia === ib) return a.localeCompare(b);
+        if (ia === -1) return 1;
+        if (ib === -1) return -1;
+        return ia - ib;
+      });
+
+      // build <li> items
+      const lis = keys.map((k) => {
+        let v = flat[k];
+
+        // suffix " kg"
+        if (k.toLowerCase().includes("Weight") && !isNaN(v)) {
+          v = `${v} kg`;
+        }
+        // prefix "R"
+        if (k.toLowerCase().includes("Cost") && !String(v).startsWith("R")) {
+          v = `R${v}`;
+        }
+        // format dates
+        v = tryFormatDate(k, v);
+
+        return `<li><strong>${formatKey(k)}:</strong> ${v}</li>`;
+      });
+
+      // put on‑chain timestamp at the bottom
+      lis.push(`
+        <li>
+          <strong>On‑chain at:</strong>
+          ${new Date(a.consensus_timestamp).toLocaleString()}
+        </li>
+      `);
+
+      return `
+        <div class="lookup-chain-block">
+          <h2>${formatKey(a.event_type || "Unknown_Event")}</h2>
+          <div class="tx-id" style="margin:0.5rem 0;font-size:0.9rem;color:#00ffbb;">
+            <strong>Txn ID:</strong> ${a.hcs_transaction_id || "—"}
+          </div>
+          <ul>
+            ${lis.join("")}
+          </ul>
+        </div>
+      `;
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      const tag = new URLSearchParams(location.search).get("animal_id");
+      if (!tag) return;
+
+      // display header
+      document.getElementById("animal-id-display").textContent =
+        `Animal ID: ${tag}`;
+
+      try {
+        const resp = await fetch(
+          `/general/animals/${encodeURIComponent(tag)}/history`
+        );
+        if (!resp.ok) throw new Error(await resp.text());
+        let history = await resp.json();
+
+        // filter out null payloads
+        history = history.filter((e) => e.payload && typeof e.payload === "object");
+
+        const container = document.getElementById("timeline");
+        if (!history.length) {
+          container.innerHTML = "<p>No history found for this animal.</p>";
+        } else {
+          container.innerHTML = history
+            .map((e, i) =>
+              renderBlock(e) +
+              (i < history.length - 1 ? `<div class="lookup-chain-arrow">↑</div>` : "")
+            )
+            .join("");
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("timeline").innerHTML =
+          `<p style="color: #f66;">Error loading history: ${err.message}</p>`;
+      }
+    });
+  </script>
+
+<script>
+    function formatKey(k) {
+      // e.g. "offspringAnimalId" → "Offspring Animal Id"
+      return k
+        .replace(/([A-Z])/g,' $1')
+        .replace(/^./, c => c.toUpperCase());
+    }
+
+    function renderBlock(a) {
+      const p = a.payload || {};
+
+      // 1) first flatten out nested p.details if it exists
+      const items = [];
+      if (p.details && typeof p.details === 'object') {
+        for (const [subk, subv] of Object.entries(p.details)) {
+          items.push(
+            `<li><strong>${formatKey(subk)}:</strong> ${subv}</li>`
+          );
+        }
+      }
+
+      // 2) now add all other top‑level keys except "details"
+      for (const [k, v] of Object.entries(p)) {
+        if (k === 'details') continue;
+        items.push(
+          `<li><strong>${formatKey(k)}:</strong> ${v}</li>`
+        );
+      }
+
+      // 3) finally the on‑chain timestamp
+      items.push(`
+        <li>
+          <strong>On-chain at:</strong>
+          ${new Date(a.consensus_timestamp).toLocaleString()}
+        </li>
+      `);
+
+      return `
+        <div class="lookup-chain-block">
+          <h2>${formatKey(a.event_type || "Unknown_Event")}</h2>
+          <div class="tx-id">
+            <strong>Hedera Transaction ID:</strong> ${a.hcs_transaction_id || "—"}
+          </div>
+          <ul>
+            ${items.join("")}
+          </ul>
+        </div>
+      `;
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      const tag = new URLSearchParams(location.search).get("animal_id");
+      if (!tag) return;
+
+      try {
+        const resp = await fetch(`/general/animals/${encodeURIComponent(tag)}/history`);
+        if (!resp.ok) throw new Error(await resp.text());
+        let history = await resp.json();
+        const container = document.getElementById("timeline");
+
+        if (!history.length) {
+          container.innerHTML = "<p>No history found for this animal.</p>";
+        } else {
+          container.innerHTML = history
+            .map((e,i) =>
+              renderBlock(e) +
+              (i < history.length - 1
+                ? `<div class="lookup-chain-arrow">↑</div>`
+                : ""
+              )
+            )
+            .join("");
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("timeline").innerHTML =
+          `<p style="color: #f66;">Error loading history: ${err.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

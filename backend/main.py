@@ -4,9 +4,10 @@ from pathlib import Path
 from fastapi import FastAPI, Depends, Request, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from routers import farmer, vet, general
+from starlette.responses import HTMLResponse
 
 # Custom Project Packages
+from backend.routers import farmer, vet, general
 from backend.database import engine
 from backend.models import Base
 from backend.ingestion import run_ingestion_loop
@@ -52,7 +53,23 @@ app.include_router(general.router)
 # Homepage
 @app.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("base.html", {"request": request})
+
+@app.get("/lookup", response_class=HTMLResponse)
+async def lookup_page(request: Request):
+    return templates.TemplateResponse("lookup.html", {"request": request})
+
+@app.get("/farmer", response_class=HTMLResponse)
+async def farmer_page(request: Request):
+    return templates.TemplateResponse("farmer.html", {"request": request})
+
+@app.get("/vet", response_class=HTMLResponse)
+async def vet_page(request: Request):
+    return templates.TemplateResponse("vet.html", {"request": request})
+
+@app.get("/lookup-chain", response_class=HTMLResponse)
+async def lookup_chain_page(request: Request):
+    return templates.TemplateResponse("lookup-chain.html", {"request": request})
 
 if __name__ == "__main__":
     import uvicorn, webbrowser
